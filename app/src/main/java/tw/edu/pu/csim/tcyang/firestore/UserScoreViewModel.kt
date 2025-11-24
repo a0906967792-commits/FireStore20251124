@@ -10,22 +10,36 @@ import kotlinx.coroutines.launch
 class UserScoreViewModel:ViewModel() {
     private val userScoreRepository = UserScoreRepository()
 
-    var message by mutableStateOf("訊息")
+    var message by mutableStateOf("請輸入姓名與分數，並選擇操作。")
         private set
 
     fun addUser(userScore: UserScoreModel) {
-        // 在 viewModelScope 中啟動一個協程
         viewModelScope.launch {
-            // 呼叫 suspend function，並等待結果
             message = userScoreRepository.addUser(userScore)
         }
     }
 
     fun updateUser(userScore: UserScoreModel) {
-        // 在 viewModelScope 中啟動一個協程
         viewModelScope.launch {
-            // 呼叫 suspend function，並等待結果
             message = userScoreRepository.updateUser(userScore)
+        }
+    }
+
+    fun deleteUser(userScore: UserScoreModel) {
+        viewModelScope.launch {
+            message = userScoreRepository.deleteUser(userScore)
+        }
+    }
+
+    fun getUserScoreByName(userScore: UserScoreModel) {
+        viewModelScope.launch {
+            message = userScoreRepository.getUserScoreByName(userScore)
+        }
+    }
+
+    fun orderUser() {
+        viewModelScope.launch {
+            message = userScoreRepository.orderByScore()
         }
     }
 }
